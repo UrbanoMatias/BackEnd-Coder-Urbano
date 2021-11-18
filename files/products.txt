@@ -1,0 +1,12 @@
+[
+  {
+    "id": "98238",
+    "prenda": "Lenceria roja",
+    "precio": 500
+  },
+  {
+    "id": "79352",
+    "prenda": "Pantalon mom",
+    "precio": 900
+  }
+]
