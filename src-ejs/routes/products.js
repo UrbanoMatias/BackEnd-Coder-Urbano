@@ -1,6 +1,5 @@
 import express from 'express';
 import Contenedor from '../classes/Contenedor.js';
-import { io } from '../server.js';
 const contenedor = new Contenedor();
 const router = express.Router();
 
@@ -24,12 +23,7 @@ router.get('/:uid',(req,res)=>{
 router.post('/',(req,res)=>{
     let product = req.body;
     contenedor.createProduct(product).then(result=>{
-        res.send(result);
-        if(result.status==="success"){
-            contenedor.getAll().then(result=>{
-                io.emit('updateProd',result)
-            })
-        }
+        res.send(result)
     })
 })
 

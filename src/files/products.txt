@@ -1,17 +1,12 @@
 [
   {
     "id": 1,
-    "name": "Pantalones",
-    "precio": "1000"
+    "name": "remera",
+    "precio": "2000"
   },
   {
-    "id": 2,
-    "name": "Remeras",
-    "precio": "500"
-  },
-  {
-    "id": 3,
-    "name": "Camisas",
-    "precio": "700"
+    "id": 6,
+    "name": "remera",
+    "precio": "2000"
   }
 ]

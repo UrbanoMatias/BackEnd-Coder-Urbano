@@ -4,8 +4,7 @@ import upload from './services/uploader.js';
 import cors from 'cors';
 import Contenedor from './classes/Contenedor.js';
 import prodRouter from './routes/products.js';
-import __dirname from './utils.js';
-import {Server} from 'socket.io';
+import __dirname from './utils.js'
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -14,11 +13,10 @@ const contenedor = new Contenedor();
 const server = app.listen(PORT,()=>{
     console.log("Servidor escuchando en: ",PORT);
 });
-export const io = new Server(server)
 
 
 app.engine('handlebars',engine());
-app.set('views',__dirname+'/views');
+app.set('views','./views');
 app.set('view engine','handlebars')
 
 app.use(upload.single('file'));
@@ -26,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(cors());
 
-app.use(express.static(__dirname+'/public'));
+app.use(express.static('public'));
 app.use('/api/products',prodRouter);
 
 
@@ -49,15 +47,6 @@ app.get('/views/products',(req,res)=>{
     })
 
 })
-
-//socket
-
-io.on('connection', async socket=>{
-    console.log(`El socket ${socket.id} se ha conectado`)
-    let products = await contenedor.getAll();
-    socket.emit('updateProd',products)
-})
-
 
 
 
