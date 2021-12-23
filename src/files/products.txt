@@ -8,5 +8,14 @@
     "id": 6,
     "name": "remera",
     "precio": "2000"
+  },
+  {
+    "id": 7,
+    "name": "CELULAR MOTOROLA E2",
+    "description": "lorem ipsum",
+    "code": "CMTE2",
+    "img": "https://images.fravega.com/f500/f29b85ffd06c691ae3dad0fecfc16f46.jpg",
+    "price": 23.999,
+    "stock": 15
   }
 ]
