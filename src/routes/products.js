@@ -2,6 +2,8 @@ import express from 'express';
 import Contenedor from '../classes/Contenedor.js';
 import Products from '../services/Products.js';
 import { io } from '../server.js';
+import ProductsMongo from '../mongo/products.js';
+const products = new ProductsMongo();
 const contenedor = new Contenedor();
 const productsService = new Products();
 const router = express.Router();
@@ -9,6 +11,13 @@ const router = express.Router();
 //GETS
 router.get('/',(req,res)=>{
     productsService.getProducts().then(result=>{
+        res.send(result);
+    })
+})
+
+router.get('/test',(req,res)=>{
+    let n = req.query.cant?parseInt(req.query.cant):5;
+    products.createProducts(n).then(result=>{
         res.send(result);
     })
 })
