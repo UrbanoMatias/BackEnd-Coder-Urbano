@@ -39,7 +39,6 @@ export default class ProductsMongo extends MongoContainer{
             } catch (error) {
                 return {status:"error",mesagge:"error" + error}
             }
-                return {status:"success",message:"producto creado",paylaod:documents}
         } catch (error) {
             return {status:"error",mesagge:"error" + error}
         }
