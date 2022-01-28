@@ -1,10 +1,10 @@
 import express from 'express';
 import Contenedor from '../classes/Contenedor.js';
-import Products from '../services/Products.js';
+// import Products from '../services/Products.js';
 import ProductsMongo from '../mongo/products.js';
 const products = new ProductsMongo();
 const contenedor = new Contenedor();
-const productsService = new Products();
+// const productsService = new Products();
 const router = express.Router();
 
 //GETS

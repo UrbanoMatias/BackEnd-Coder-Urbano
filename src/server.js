@@ -11,6 +11,8 @@ import __dirname, { normalizeMessages } from './utils.js';
 import {Server} from 'socket.io';
 import ios from 'socket.io-express-session';
 import { messageService, userService } from './services/services.js';
+import { initializePassport } from './passport-config.js';
+import passport from 'passport';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -26,6 +28,13 @@ const baseSession = (session({
     secret:"chat"
 }))
 
+app.use(session({
+    store:MongoStore.create({mongoUrl:'mongodb+srv://matias:123@e-commerce.zcznv.mongodb.net/session?retryWrites=true&w=majority'}),
+    secret:"Urban0",
+    resave:false,
+    saveUninitialized:false
+}))
+
 export const io = new Server(server)
 io.use(ios(baseSession))
 
@@ -34,14 +43,26 @@ io.use(ios(baseSession))
 // app.set('view engine','handlebars')
 
 app.use(upload.single('file'));
+app.use(express.static(__dirname+'/public'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(cors());
+initializePassport();
+app.use(passport.initialize()); 
+app.use(passport.session());
 
-app.use(express.static(__dirname+'/public'));
+
+
 app.use('/api/products',prodRouter);
 app.use('/api/users',usersRouter);
 
+app.post('/register',passport.authenticate('register',{failureRedirect:'/failedRegister'}),(req,res)=>{
+    res.send({message:"signed up"})
+})
+
+app.post('/failedRegister',(req,res)=>{
+    res.send({error:"No se pudo autenticar"})
+})
 
 app.post('/api/uploadfile',upload.single('file'),(req,res)=>{
     const files = req.files;

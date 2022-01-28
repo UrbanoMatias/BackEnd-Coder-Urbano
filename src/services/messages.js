@@ -20,7 +20,6 @@ export default class MessageService extends GenericQueries{
     }
     async getDataToNormalize(params){
         let documents  = await this.dao.findAll(params,this.model);
-        console.log(documents);
         documents = documents.map(document=>{
             document._id = document._id.toString();
             document['user']['_id'] = document['user']['_id'].toString();

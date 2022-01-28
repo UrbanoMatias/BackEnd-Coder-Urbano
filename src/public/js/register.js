@@ -9,7 +9,7 @@ form.addEventListener('submit',function(event){
         email:info.get('email'),
         password:info.get('password')
     }
-    fetch('/api/users/register',{
+    fetch('/register',{
         method:"POST",
         body:JSON.stringify(sendObject),
         headers:{

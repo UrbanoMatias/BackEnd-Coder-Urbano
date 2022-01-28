@@ -1,6 +1,7 @@
 import {fileURLToPath} from 'url';
 import {dirname} from 'path';
 import { normalize,schema } from 'normalizr';
+import bcrypt from 'bcrypt';
 
 const filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(filename);
@@ -21,3 +22,8 @@ export const normalizeMessages = (data) =>{
     return normalizeObject;
 
 }
+
+// BCRYPT
+
+export const createHash = password => bcrypt.hashSync(password,bcrypt.genSaltSync(10));
+export const isValidPassword = (user,password) => bcrypt.compareSync(password,user.password)

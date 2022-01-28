@@ -3,7 +3,7 @@ form.addEventListener("submit",function(event){
     event.preventDefault();
     let info = new FormData(form);
     let sendObject={
-        email:info.get('email'),
+        username:info.get('username'),
         password:info.get('password')
     }
     fetch('/api/users/login',{
