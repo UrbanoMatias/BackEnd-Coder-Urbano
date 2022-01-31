@@ -2,6 +2,7 @@ import express from 'express';
 import {engine} from 'express-handlebars';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import mongoose from "mongoose"
 import upload from './services/uploader.js';
 import cors from 'cors';
 import Contenedor from './classes/Contenedor.js';
@@ -13,14 +14,15 @@ import ios from 'socket.io-express-session';
 import { messageService, userService } from './services/services.js';
 import { initializePassport } from './passport-config.js';
 import passport from 'passport';
+import initializePassportConfig from './facebook/passport-config.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 const contenedor = new Contenedor();
-
 const server = app.listen(PORT,()=>{
     console.log("Servidor escuchando en: ",PORT);
 });
+const connection = mongoose.connect('mongodb+srv://matias:123@e-commerce.zcznv.mongodb.net/E-commerce?retryWrites=true&w=majority')
 const baseSession = (session({
     store:MongoStore.create({mongoUrl:'mongodb+srv://matias:123@e-commerce.zcznv.mongodb.net/session?retryWrites=true&w=majority'}),
     resave:false,
@@ -48,10 +50,23 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(cors());
 initializePassport();
+initializePassportConfig();
 app.use(passport.initialize()); 
 app.use(passport.session());
 
+//FACEBOOK
 
+app.get('/auth/facebook',passport.authenticate('facebook',{scope:['email']}),(req,res)=>{
+
+})
+
+app.get('/auth/facebook/callback',passport.authenticate('facebook',{
+    failureRedirect:'/paginaDeFail'
+}),(req,res)=>{
+    res.send({message:"Finalmente, Logueado"})
+})
+
+//FACEBOOK
 
 app.use('/api/products',prodRouter);
 app.use('/api/users',usersRouter);

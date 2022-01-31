@@ -16,6 +16,7 @@ socket.on('updateProd',data=>{
 
 //------------------------------fIN DE SOCKET-------------------
 
+
 document.addEventListener('submit',enviarFormulario);
 
 function enviarFormulario(event){

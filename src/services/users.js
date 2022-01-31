@@ -17,7 +17,7 @@ export default class UserService extends GenericQueries{
             }else if (find.some(p => p.password === newUser.password)){
                 return {status:"error",message:"El usuario ya existe"}
             }else{
-                let documents = await this.collection.insertMany(object);
+                let documents = await this.collection.insertOne(newUser);
                 return {status:"success",message:"Usuario creado",paylaod:documents}
             }
         } catch (error) {
