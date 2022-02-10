@@ -15,13 +15,34 @@ import { messageService, userService } from './services/services.js';
 import { initializePassport } from './passport-config.js';
 import passport from 'passport';
 import initializePassportConfig from './facebook/passport-config.js';
+import dotenv from 'dotenv';
+import {fork} from 'child_process';
+import yargs from 'yargs';
 
-const app = express();
-const PORT = process.env.PORT || 8080;
+dotenv.config()
+
+//YARGS
+
+let  yarg = yargs(process.argv.slice(2));
+
+let processedArgs = yarg.default({
+    p:8081
+}).argv;
+
+let config ={
+    port:processedArgs.p
+}
+console.log(config)
+
+//YARGS
+
+const app = express()
+const PORT = process.env.PORT||8081;
+const server = app.listen(PORT,()=>console.log(`Linstenig on ${PORT}`))
+console.log(process.env.NODE_ENV)
+
 const contenedor = new Contenedor();
-const server = app.listen(PORT,()=>{
-    console.log("Servidor escuchando en: ",PORT);
-});
+
 const connection = mongoose.connect('mongodb+srv://matias:123@e-commerce.zcznv.mongodb.net/E-commerce?retryWrites=true&w=majority')
 const baseSession = (session({
     store:MongoStore.create({mongoUrl:'mongodb+srv://matias:123@e-commerce.zcznv.mongodb.net/session?retryWrites=true&w=majority'}),
@@ -121,6 +142,32 @@ io.on('connection', async socket=>{
     })
 })
 
+
+//PROCESS
+app.get('/info',(req,res)=>{
+    res.send({
+        "Carpeta del proyecto": process.cwd(), 
+        "Process id": process.pid,
+        "Version de node.js": process.version,
+        "Sistema operativo": process.platform,
+        "Memoria total reservada": JSON.stringify(process.memoryUsage()),
+        "Part de ejecucion": process.execPath,
+        "Argurmento de entrada": process.title})
+})
+
+
+//FORK
+
+app.get('/random',(req,res)=>{
+    const sum = fork('calculo');
+    sum.on('message',(data)=>{
+        console.log(data);
+        let cant = parseInt(req.query.cant)
+        let random = data * cant
+        res.send(`El valor de la suma es : ${random}`)
+    })
+
+})
 
 
 

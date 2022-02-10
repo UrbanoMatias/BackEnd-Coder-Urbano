@@ -25,7 +25,7 @@ const initializePassportConfig = () => {
         done(null,user._id)
     })
     passport.deserializeUser((id,done)=>{
-        userService.findById(id,done);
+        user.findById(id,done);
     })
 }
 

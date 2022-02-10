@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
 import User from './user.js';
 import Message from './message.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default class Dao{
     constructor(){
-        mongoose.connect('mongodb+srv://matias:123@e-commerce.zcznv.mongodb.net/E-commerce?retryWrites=true&w=majority',{ useNewUrlParser: true }).catch(error=>{
+        mongoose.connect(process.env.BASEURL,{ useNewUrlParser: true }).catch(error=>{
             console.error(error);
             process.exit();
         })

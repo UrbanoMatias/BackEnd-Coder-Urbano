@@ -14,12 +14,14 @@ const router = express.Router();
 //     secret:"chat"
 // }))
 
-router.use(session({
-    store:MongoStore.create({mongoUrl:'mongodb+srv://matias:123@e-commerce.zcznv.mongodb.net/session?retryWrites=true&w=majority'}),
-    secret:"Urban0",
-    resave:false,
-    saveUninitialized:false
-}))
+
+
+// router.use(session({
+//     store:MongoStore.create({mongoUrl:'mongodb+srv://matias:123@e-commerce.zcznv.mongodb.net/session?retryWrites=true&w=majority'}),
+//     secret:"Urban0",
+//     resave:false,
+//     saveUninitialized:false
+// }))
 
 initializePassport();
 router.use(passport.initialize()); 

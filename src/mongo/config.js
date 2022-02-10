@@ -1,7 +1,9 @@
 import __dirname from "../utils.js";
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default{
     mongo:{
-        baseUrl: "mongodb+srv://matias:123@e-commerce.zcznv.mongodb.net/E-commerce?retryWrites=true&w=majority" 
+        baseUrl: process.env.BASEURL 
     }
 }
